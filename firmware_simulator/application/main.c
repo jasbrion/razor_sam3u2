@@ -22,6 +22,8 @@ All Global variable names shall start with "G_"
 Global variable definitions with scope limited to this local application.
 Variable names shall start with "Main_" and be declared as static.
 ***********************************************************************************************************************/
+static u8 Main_u8Servers = 0; //number of people serving drinks
+
 
 /***********************************************************************************************************************
 Main Program
