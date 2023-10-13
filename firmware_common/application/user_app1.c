@@ -92,6 +92,18 @@ Promises:
 */
 void UserApp1Initialize(void)
 {
+  /*turn on LED using ON function*/
+  LedOn(BLUE);
+  
+  /*turn on LED using TOGGLE function*/
+  LedToggle(PURPLE);
+  
+  /*set LED to blink at 2Hz*/
+  LedBlink(RED, LED_2HZ);
+  
+  /*set LED to dimmest state (5% duty cycle)*/
+  LedPWM(WHITE, LED_PWM_5);
+  
   /* If good initialization, set state to Idle */
   if( 1 )
   {
