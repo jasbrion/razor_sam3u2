@@ -139,19 +139,30 @@ State Machine Function Definitions
 **********************************************************************************************************************/
 /*-------------------------------------------------------------------------------------------------------------------*/
 /* What does this state do? */
-static void UserApp1SM_Idle(void)
+static void UserApp1SM_Idle(void) 
 {
+  
   static u16 u16Counter = 0;
+  static bool bLightIsOn = FALSE;
   
-  u16Counter++;         //increment counter every 1ms
-  if (u16Counter == U16_COUNTER_PERIOD_MS) {
-    HEARTBEAT_ON();
+  u16Counter++;         //increment counter every 1ms and check if its done
+  
+  if (u16Counter == U16_COUNTER_PERIOD_MS) 
+  {
+    
     u16Counter = 0;
+    
+    if(bLightIsOn) 
+    {
+      HEARTBEAT_OFF();
+      bLightIsOn = FALSE;
+    } 
+    else 
+    {
+      HEARTBEAT_ON();
+      bLightIsOn = TRUE;
+    }
   }
-  else {
-    HEARTBEAT_OFF();
-  }
-  
 } /* end UserApp1SM_Idle() */
      
 
