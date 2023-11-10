@@ -92,17 +92,20 @@ Promises:
 */
 void UserApp1Initialize(void)
 {
-  /*turn on LED using ON function*/
-  LedOn(BLUE);
+  // turn off all unused LEDs
+  LedOff(CYAN);
+  LedOff(GREEN);
+  LedOff(ORANGE);
+  LedOff(YELLOW);
+  LedOff(PURPLE);
+  LedOff(BLUE);
+  LedOff(RED);
+  LedOff(WHITE);
   
-  /*turn on LED using TOGGLE function*/
-  LedToggle(PURPLE);
-  
-  /*set LED to blink at 2Hz*/
-  LedBlink(RED, LED_2HZ);
-  
-  /*set LED to dimmest state (5% duty cycle)*/
-  LedPWM(WHITE, LED_PWM_5);
+  //Backlight to WHITE
+  LedOn(LCD_RED);
+  LedOn(LCD_BLUE);
+  LedOn(LCD_GREEN);
   
   /* If good initialization, set state to Idle */
   if( 1 )
@@ -152,7 +155,101 @@ State Machine Function Definitions
 /* What does this state do? */
 static void UserApp1SM_Idle(void)
 {
+  static u16 u16BlinkCounter = 0;
+  static u8 u8Counter = 0;
+  static u8 u8ColorIndex = 0;
+  
+  u16BlinkCounter++;
+  
+  if (u16BlinkCounter == 250) {
+    u16BlinkCounter = 0;
     
+    //update counter and reset at 16
+    u8Counter++;
+    
+    if(u8Counter == 16) {
+      u8Counter = 0;
+    }
+    /*
+    //manage backlight
+    u8ColorIndex++;
+    if (u8ColorIndex == 7) {
+      u8ColorIndex = 0;
+    }
+    
+    //set backlight color: white (all), purple (blue + red), blue, cyan (blue + green), green, yellow (green + red), red
+    switch(u8ColorIndex) {
+ 
+      case 0: //white
+        LedOn(LCD_RED);
+        LedOn(LCD_BLUE);
+        LedOn(LCD_GREEN);
+        break;
+      
+      case 1: //purple
+        LedOn(LCD_BLUE);
+        LedOn(LCD_RED);
+        LedOff(LCD_GREEN);
+        break;
+        
+      case 2: //blue
+        LedOn(LCD_BLUE);
+        LedOff(LCD_RED);
+        LedOff(LCD_GREEN);
+        break;
+
+      case 3: //cyan
+        LedOn(LCD_BLUE);
+        LedOn(LCD_GREEN);
+        LedOff(LCD_RED);
+        break;
+        
+      case 4: //green
+        LedOn(LCD_GREEN);
+        LedOff(LCD_RED);
+        LedOff(LCD_BLUE);
+        break;
+    
+      case 5: //yellow
+        LedOn(LCD_GREEN);
+        LedOn(LCD_RED);
+        LedOff(LCD_BLUE);
+        break;
+      
+      case 6: //red
+        LedOn(LCD_RED);
+        LedOff(LCD_BLUE);
+        LedOff(LCD_GREEN);
+        break;
+    }*/
+    //parse current count to LEDs!! RED is bit 0, ORANGE is bit 1, YELLOW is bit 2, GREEN is bit 3
+    /*
+    if(u8Counter & 0x01) {
+      LedOn(RED);
+    }
+    else {
+      LedOff(RED);
+    }
+    if(u8Counter & 0x02) {
+      LedOn(ORANGE);
+    }
+    else {
+      LedOff(ORANGE);
+    }
+    if(u8Counter & 0x04) {
+      LedOn(YELLOW);
+    }
+    else {
+      LedOff(YELLOW);
+    }
+    if(u8Counter & 0x08) {
+      LedOn(GREEN);
+    }
+    else {
+      LedOff(GREEN);
+    }
+    */
+  } // end if u16BlinkCounter == 250
 } /* end UserApp1SM_Idle() */
      
 
